@@ -4,8 +4,8 @@ import '../controllers/home_controller.dart';
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ItemController>(
-      () => ItemController(),
+    Get.lazyPut<UserController>(
+      () => UserController(),
     );
   }
 }
