@@ -17,7 +17,7 @@ class HomeView extends GetView<UserController> {
               return ListView.builder(
                 itemCount: controller.user.length,
                 itemBuilder: (context, index) {
-                  final user = controller.user[index];
+                  final user = controller.user[index];                 
                   return Card(
                     elevation: 4,
                     margin: const EdgeInsets.symmetric(
@@ -28,14 +28,7 @@ class HomeView extends GetView<UserController> {
                       trailing: IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          controller.deleteUser(user.id);
-                          Get.snackbar(
-                            "Succès",
-                            "L'utilisateur a été supprimé.",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                          );
+                          controller.deleteUser(user.id);                        
                         },
                       ),
                       onTap: () {
@@ -154,39 +147,19 @@ class HomeView extends GetView<UserController> {
                   ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        if (user == null) {
+                        if (user == null) {                         
                           controller.addUser(
                             nameController.text,
                             descController.text,
                           );
-                          Get.snackbar(
-                            "Succès",
-                            "L'utilisateur a été ajouté.",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.green,
-                            colorText: Colors.white,
-                            icon: Icon(
-                              Icons.add_circle,
-                              color: Colors.white,
-                            ),
-                          );
+                         
                         } else {
                           controller.updateUser(
                             user.id,
                             nameController.text,
                             descController.text,
                           );
-                          Get.snackbar(
-                            "Succès",
-                            "L'utilisateur a été modifié.",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.blue,
-                            colorText: Colors.white,
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            ),
-                          );
+                         
                         }
                         Navigator.pop(context);
                       }
