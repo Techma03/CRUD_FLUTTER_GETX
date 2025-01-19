@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:crudapp/app/data/api_provider_provider.dart';
+import 'package:crudapp/app/data/api_provider.dart';
 import 'package:get/get.dart';
 import '../model/user_model.dart';
 
