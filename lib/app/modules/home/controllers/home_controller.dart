@@ -13,25 +13,15 @@ class UserController extends GetxController {
     fetchUser();
   }
 
-  void fetchUser() async {
-    try {
+  void fetchUser() async {    
       final response = await _apiProvider.getUser();
-      user.value = response.map((data) => User.fromJson(data)).toList();
-    } catch (e) {
-      Get.snackbar(
-        "Erreur", "Échec du chargement des utilisateurs.",
-         backgroundColor: Colors.red,
-         colorText: Colors.white,
-      );
-    }
+      user.value = response.map((data) => User.fromJson(data)).toList();    
   }
 
-  void addUser(String name, String description) async {
-  try {
+  void addUser(String name, String description) async { 
     final Map<String, dynamic>? newUser = await _apiProvider.addUser(name, description);
-
     if (newUser != null) {
-      user.add(User.fromJson(newUser)); // Use safely since it's checked for null
+      user.add(User.fromJson(newUser)); 
            Get.snackbar(
         "Succès", 
         "Utilisateur ajouté avec succès.",
@@ -41,50 +31,22 @@ class UserController extends GetxController {
       );
     } else {
       throw Exception("L'utilisateur ajouté est null.");
-    }
-  } catch (e) {
-    print("Erreur lors de l'ajout de l'utilisateur : $e");
-    Get.snackbar(
-      "Erreur de Connexion", 
-      "Échec de l'ajout de l'utilisateur.",
-      backgroundColor: Colors.red,
-      colorText: Colors.white,
-      snackPosition: SnackPosition.BOTTOM,
-    );
-  }
+    }  
    fetchUser();
 }
-
-
-  void updateUser(int id, String name, String description) async {
-    try {
-      final updatedUser = await _apiProvider.updateUser(id, name, description);
+ void updateUser(int id, String name, String description) async {
+     final updatedUser = await _apiProvider.updateUser(id, name, description);
       final index = user.indexWhere((u) => u.id == id);
       if (index != -1) {
-        user[index] = User.fromJson(updatedUser!); // Met à jour localement.
-        
-      }
-    } catch (e) {
-     
-    }
+        user[index] = User.fromJson(updatedUser!);         
+      }   
     fetchUser();
   }
-
-  void deleteUser(int id) async {
-    print(id);
-    try {
+  void deleteUser(int id) async {      
       final success = await _apiProvider.deleteUser(id);
       if (success) {
-        user.removeWhere((u) => u.id == id); // Supprime localement.
-          
-      }
-    } catch (e) {
-      Get.snackbar("Erreur de Connexion", "Échec de la suppression de l'utilisateur.",
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
+        user.removeWhere((u) => u.id == id);    
     fetchUser();     
+    }
   }
 }

@@ -21,26 +21,19 @@ class ApiProvider {
     body: jsonEncode({'name': name, 'description': description}),
   );
 
-  if (response.statusCode == 200) {
-    // Parse et retourne la réponse en cas de succès
+  if (response.statusCode == 200) {    
     return jsonDecode(response.body);
-  } else if (response.statusCode == 400) {
-    // Mauvaise entrée
+  } else if (response.statusCode == 400) {    
     throw Exception("Invalid input: ${response.body}");
-  } else if (response.statusCode == 500) {
-    // Erreur serveur
+  } else if (response.statusCode == 500) {    
     throw Exception("Server error: ${response.body}");
-  } else {
-    // Autres erreurs
+  } else {    
     throw Exception("Unexpected error: ${response.statusCode}");
   }
 }
-
-
  Future<Map<String, dynamic>?> updateUser(
     int id, String name, String description) async {
   final url = Uri.parse("$baseUrl/data.php");
-
   try {
     final response = await http.put(
       url,
@@ -94,10 +87,9 @@ class ApiProvider {
   }
 }
 
-
  Future<bool> deleteUser(int id) async {
   final response = await http.delete(
-    Uri.parse("$baseUrl/data.php"), // Assurez-vous que le point d'entrée est correct
+    Uri.parse("$baseUrl/data.php"), 
     headers: {'Content-Type': 'application/json'},
     body: jsonEncode({'id': id}),
   );
