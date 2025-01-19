@@ -32,9 +32,7 @@ class UserController extends GetxController {
 
     if (newUser != null) {
       user.add(User.fromJson(newUser)); // Use safely since it's checked for null
-      fetchUser();
-
-      Get.snackbar(
+           Get.snackbar(
         "Succès", 
         "Utilisateur ajouté avec succès.",
         backgroundColor: Colors.green,
@@ -46,7 +44,6 @@ class UserController extends GetxController {
     }
   } catch (e) {
     print("Erreur lors de l'ajout de l'utilisateur : $e");
-
     Get.snackbar(
       "Erreur de Connexion", 
       "Échec de l'ajout de l'utilisateur.",
@@ -55,6 +52,7 @@ class UserController extends GetxController {
       snackPosition: SnackPosition.BOTTOM,
     );
   }
+   fetchUser();
 }
 
 
@@ -64,21 +62,12 @@ class UserController extends GetxController {
       final index = user.indexWhere((u) => u.id == id);
       if (index != -1) {
         user[index] = User.fromJson(updatedUser!); // Met à jour localement.
-        fetchUser();
-        Get.snackbar("Succès", "Utilisateur modifié avec succès.",
-        backgroundColor: Colors.blue,
-         colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM
-          );
+        
       }
     } catch (e) {
-      Get.snackbar(
-        "Erreur de Connexion", "Échec de la mise à jour de l'utilisateur.",
-         backgroundColor: Colors.red,
-         colorText: Colors.white,
-         snackPosition: SnackPosition.BOTTOM,
-        );
+     
     }
+    fetchUser();
   }
 
   void deleteUser(int id) async {

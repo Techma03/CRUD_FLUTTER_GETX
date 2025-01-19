@@ -12,8 +12,8 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] ?? 0, 
-      name: json['name'] ?? 'Inconnu', // Valeur par défaut pour un String
-      description: json['description'] ?? 'Aucune description', // Valeur par défaut pour un String
+      name: json['name'] ?? '', // Valeur par défaut pour un String
+      description: json['description'] ?? '', // Valeur par défaut pour un String
     );
   }
 }
