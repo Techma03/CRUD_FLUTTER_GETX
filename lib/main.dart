@@ -11,15 +11,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Crud App Avec GetX",
-      debugShowCheckedModeBanner: false, 
-      theme: ThemeData(        
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white,          
+          backgroundColor: Colors.white,
         ),
-       
       ),
-      darkTheme: ThemeData.dark(), 
-      themeMode: ThemeMode.system, 
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     );

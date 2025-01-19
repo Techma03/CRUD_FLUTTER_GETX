@@ -17,18 +17,18 @@ class HomeView extends GetView<UserController> {
               return ListView.builder(
                 itemCount: controller.user.length,
                 itemBuilder: (context, index) {
-                  final user = controller.user[index];                 
+                  final user = controller.user[index];
                   return Card(
                     elevation: 4,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 5),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: ListTile(
                       title: Text(user.name),
                       subtitle: Text(user.description),
                       trailing: IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          controller.deleteUser(user.id);                        
+                          controller.deleteUser(user.id);
                         },
                       ),
                       onTap: () {
@@ -147,19 +147,17 @@ class HomeView extends GetView<UserController> {
                   ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        if (user == null) {                         
+                        if (user == null) {
                           controller.addUser(
                             nameController.text,
                             descController.text,
                           );
-                         
                         } else {
                           controller.updateUser(
                             user.id,
                             nameController.text,
                             descController.text,
                           );
-                         
                         }
                         Navigator.pop(context);
                       }
