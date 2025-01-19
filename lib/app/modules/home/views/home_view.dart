@@ -8,7 +8,7 @@ class HomeView extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Bienvenu Administrateur!!")),
+      appBar: AppBar(title: const Text("Bienvenu Administrateur!!")),
       backgroundColor: Colors.white,
       body: Column(
         children: [
@@ -76,7 +76,7 @@ class HomeView extends GetView<UserController> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
@@ -105,7 +105,7 @@ class HomeView extends GetView<UserController> {
                   ),
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
