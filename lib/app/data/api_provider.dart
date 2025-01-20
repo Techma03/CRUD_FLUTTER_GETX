@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiProvider {
-  final String baseUrl = "http://192.168.217.4/techapp";
+  final String baseUrl = "http://192.168.176.4/techapp";
   Future<List<dynamic>> getUser() async {
     final response = await http.get(Uri.parse("$baseUrl/data.php"));
     if (response.statusCode == 200) {

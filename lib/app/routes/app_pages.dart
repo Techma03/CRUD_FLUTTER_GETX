@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
+
+import '../modules/crud/bindings/crud_binding.dart';
+import '../modules/crud/views/crud_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -13,6 +17,11 @@ class AppPages {
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.CRUD,
+      page: () => const CrudView(),
+      binding: CrudBinding(),
     ),
   ];
 }
