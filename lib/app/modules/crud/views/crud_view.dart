@@ -1,10 +1,8 @@
-
 import 'package:crudapp/app/modules/crud/controllers/crud_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-class CrudView extends GetView< CrudController> {
+class CrudView extends GetView<CrudController> {
   const CrudView({super.key});
 
   @override

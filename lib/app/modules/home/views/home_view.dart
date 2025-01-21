@@ -18,19 +18,19 @@ class HomeView extends StatelessWidget {
         'title': 'TODO APP',
         'color': Colors.greenAccent,
         'icon': Icons.check_circle_outline,
-        'route': '/todoApp', // Route pour TODO APP
+        'route': '/todo', // Route pour TODO APP
       },
       {
         'title': 'PAY APP',
         'color': Colors.orangeAccent,
         'icon': Icons.payment,
-        'route': '/payApp', // Route pour PAY APP
+        'route': '/payapp', // Route pour PAY APP
       },
       {
         'title': 'CREDIT APP',
         'color': Colors.purpleAccent,
         'icon': Icons.credit_card,
-        'route': '/creditApp', // Route pour CREDIT APP
+        'route': '/creditapp', // Route pour CREDIT APP
       },
     ];
 

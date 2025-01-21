@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:crudapp/app/data/api_provider.dart';
 import 'package:get/get.dart';
 
-
 class CrudController extends GetxController {
   final ApiProvider _apiProvider = ApiProvider();
   var user = <User>[].obs;
@@ -49,7 +48,7 @@ class CrudController extends GetxController {
   void deleteUser(int id) async {
     final success = await _apiProvider.deleteUser(id);
     if (success) {
-      user.removeWhere((u) => u.id == id);      
+      user.removeWhere((u) => u.id == id);
     }
     fetchUser();
   }
