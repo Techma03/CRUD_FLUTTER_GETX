@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/creditapp/bindings/creditapp_binding.dart';
 import '../modules/creditapp/views/creditapp_view.dart';
-import '../modules/crud/bindings/crud_binding.dart';
-import '../modules/crud/views/crud_view.dart';
+import '../modules/agents/bindings/agents_binding.dart';
+import '../modules/agents/views/agents_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/payapp/bindings/payapp_binding.dart';
@@ -26,7 +26,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CRUD,
-      page: () => const CrudView(),
+      page: () => const AgentView(),
       binding: CrudBinding(),
     ),
     GetPage(

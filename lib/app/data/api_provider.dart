@@ -4,19 +4,19 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiProvider {
-  final String baseUrl = "http://192.168.220.4/techapp";
-  Future<List<dynamic>> getUser() async {
-    final response = await http.get(Uri.parse("$baseUrl/data.php"));
+  final String baseUrl = "http://192.168.177.4/techapp";
+  Future<List<dynamic>> getAgent() async {
+    final response = await http.get(Uri.parse("$baseUrl/agents/data.php"));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception("Failed to load users");
+      throw Exception("Failed to load Agents");
     }
   }
 
-  Future<Map<String, dynamic>?> addUser(String name, String description) async {
+  Future<Map<String, dynamic>?> addAgent(String name, String description) async {
     final response = await http.post(
-      Uri.parse("$baseUrl/data.php"),
+      Uri.parse("$baseUrl/agents/data.php"),
       headers: {
         'Content-Type': 'application/json'
       }, // Indique que les données sont en JSON
@@ -24,7 +24,14 @@ class ApiProvider {
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+       Get.snackbar(
+        "Succès",
+        "Agent ajouté avec succès.",
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return jsonDecode(response.body);      
     } else if (response.statusCode == 400) {
       throw Exception("Invalid input: ${response.body}");
     } else if (response.statusCode == 500) {
@@ -34,9 +41,9 @@ class ApiProvider {
     }
   }
 
-  Future<Map<String, dynamic>?> updateUser(
+  Future<Map<String, dynamic>?> updateAgent(
       int id, String name, String description) async {
-    final url = Uri.parse("$baseUrl/data.php");
+    final url = Uri.parse("$baseUrl/agents/data.php");
     try {
       final response = await http.put(
         url,
@@ -49,7 +56,7 @@ class ApiProvider {
           print("Mise à jour réussie : $responseBody");
           Get.snackbar(
             "Succès",
-            "Utilisateur modifié avec succès.",
+            "Agent modifié avec succès.",
             backgroundColor: Colors.blue,
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM,
@@ -59,7 +66,7 @@ class ApiProvider {
           print("Échec de la mise à jour : ${responseBody['message']}");
           Get.snackbar(
             "Erreur",
-            "Échec de la mise à jour de l'utilisateur : ${responseBody['message']}",
+            "Échec de la mise à jour de l'Agent : ${responseBody['message']}",
             backgroundColor: Colors.red,
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM,
@@ -90,16 +97,16 @@ class ApiProvider {
     }
   }
 
-  Future<bool> deleteUser(int id) async {
+  Future<bool> deleteAgent(int id) async {
     final response = await http.delete(
-      Uri.parse("$baseUrl/data.php"),
+      Uri.parse("$baseUrl/agents/data.php"),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'id': id}),
     );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
-      Get.snackbar("Succès", "Utilisateur supprimé avec succès.",
+      Get.snackbar("Succès", "Agent supprimé avec succès.",
           backgroundColor: Colors.green,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM);
@@ -107,7 +114,7 @@ class ApiProvider {
     } else {
       throw Exception(Get.snackbar(
         "Erreur de Connexion",
-        "Échec de la suppression de l'utilisateur.",
+        "Échec de la suppression de l'Agent.",
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -122,7 +129,7 @@ class ApiProvider {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception("Failed to load users");
+      throw Exception("Failed to load Agents");
     }
   }
 

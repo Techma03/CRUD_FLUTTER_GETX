@@ -36,7 +36,14 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Z-gest",style:TextStyle(fontWeight:FontWeight.bold)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [   
+            Icon(Icons.menu,size:30),                    
+            const Text("Z-Gest",style:TextStyle(fontWeight:FontWeight.bold)),
+            Icon(Icons.person,size:30),           
+          ],
+        ),
       ),
       backgroundColor: Colors.white,
       body: Padding(

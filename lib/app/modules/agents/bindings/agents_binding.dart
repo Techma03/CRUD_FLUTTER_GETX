@@ -1,4 +1,4 @@
-import 'package:crudapp/app/modules/crud/controllers/crud_controller.dart';
+import 'package:crudapp/app/modules/agents/controllers/agents_controller.dart';
 import 'package:get/get.dart';
 
 class CrudBinding extends Bindings {

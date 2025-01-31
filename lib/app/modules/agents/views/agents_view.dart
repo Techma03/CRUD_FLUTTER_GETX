@@ -1,9 +1,9 @@
-import 'package:crudapp/app/modules/crud/controllers/crud_controller.dart';
+import 'package:crudapp/app/modules/agents/controllers/agents_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CrudView extends GetView<CrudController> {
-  const CrudView({super.key});
+class AgentView extends GetView<CrudController> {
+  const AgentView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,27 +15,27 @@ class CrudView extends GetView<CrudController> {
           Expanded(
             child: Obx(() {
               return ListView.builder(
-                itemCount: controller.user.length,
+                itemCount: controller.agent.length,
                 itemBuilder: (context, index) {
-                  final user = controller.user[index];
+                  final agent = controller.agent[index];
                   return Card(
                     elevation: 4,
                     margin:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: ListTile(
-                      title: Text(user.name),
-                      subtitle: Text(user.description),
+                      title: Text(agent.name),
+                      subtitle: Text(agent.description),
                       trailing: IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          controller.deleteUser(user.id);
+                          controller.deleteAgent(agent.id);
                         },
                       ),
                       onTap: () {
                         _showBottomSheet(
                           context,
-                          title: "Modifier utilisateur",
-                          user: user,
+                          title: "Modifier Agent",
+                          user: agent,
                         );
                       },
                     ),
@@ -48,7 +48,7 @@ class CrudView extends GetView<CrudController> {
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton.icon(
               onPressed: () =>
-                  _showBottomSheet(context, title: "Ajouter un utilisateur"),
+                  _showBottomSheet(context, title: "Ajouter un Agent"),
               icon: Icon(Icons.add),
               label: Container(child: Text("Nouveau")),
               style: ElevatedButton.styleFrom(
@@ -148,12 +148,12 @@ class CrudView extends GetView<CrudController> {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         if (user == null) {
-                          controller.addUser(
+                          controller.addAgent(
                             nameController.text,
                             descController.text,
                           );
                         } else {
-                          controller.updateUser(
+                          controller.updateAgent(
                             user.id,
                             nameController.text,
                             descController.text,
