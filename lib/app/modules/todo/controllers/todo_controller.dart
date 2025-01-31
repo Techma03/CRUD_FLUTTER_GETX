@@ -1,52 +1,90 @@
+import 'package:crudapp/app/data/api_provider.dart';
+import 'package:crudapp/app/modules/todo/model/task_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:crudapp/app/modules/todo/model/task_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-// Contrôleur pour gérer la logique de l'application
+// Contrôleur pour la gestion des tâches
 class TodoController extends GetxController {
   final tasks = <Task>[].obs;
+  final ApiProvider _apiProvider = ApiProvider();
   final taskTitleController = TextEditingController();
   final taskDescriptionController = TextEditingController();
   final taskDateController = TextEditingController();
   final taskTimeController = TextEditingController();
 
-  // Ajouter une tâche avec validation
-  void addTask(BuildContext context) {
-    if (_validateFields(context)) {
-      tasks.add(
-        Task(
-          title: taskTitleController.text.trim(),
-          description: taskDescriptionController.text.trim(),
-          date: taskDateController.text.trim(),
-          time: taskTimeController.text.trim(),
-        ),
-      );
-      Get.back();
-    }
+  @override
+  void onInit() {
+    super.onInit();
+    fetchTasks();
   }
 
-  // Modifier une tâche avec validation
-  void editTask(BuildContext context, int index) {
-    if (_validateFields(context)) {
-      tasks[index].title = taskTitleController.text.trim();
-      tasks[index].description = taskDescriptionController.text.trim();
-      tasks[index].date = taskDateController.text.trim();
-      tasks[index].time = taskTimeController.text.trim();
-      tasks.refresh();
-      Get.back();
+  // Obtenir toutes les tâches
+  void fetchTasks() async {
+    final response = await _apiProvider.getTask();
+    tasks.value = response.map((data) => Task.fromJson(data)).toList();
+  }
+
+  // Ajouter une tâche
+  Future<void> addTask(
+      String title, String description, String date, String time) async {
+    final Map<String, dynamic>? newTask =
+        await _apiProvider.addTask(title, description, date, time);
+    if (newTask != null) {
+      tasks.add(Task.fromJson(newTask));
+    } else {
+      throw Exception("Tache ajouter Null");
     }
+    fetchTasks();
+  }
+
+  // Modifier une tâche
+  Future<void> updatedTask(int id, String title, String description,
+      String date, String time) async {
+    final updatedTask =
+        await _apiProvider.updatedTask(id, title, description, date, time);
+    final index = tasks.indexWhere((u) => u.id == id);
+    if (index != -1) {
+      tasks[index] = Task.fromJson(updatedTask!);
+    }
+    fetchTasks();
   }
 
   // Supprimer une tâche
-  void deleteTask(int index) {
-    tasks.removeAt(index);
+  void deleteTask(int id) async {
+    final success = await _apiProvider.deleteTask(id);
+    if (success) {
+      tasks.removeWhere((u) => u.id == id);
+    }
+    fetchTasks();
   }
 
-  // Basculer l'état d'achèvement d'une tâche
-  void toggleTaskCompletion(int index) {
-    tasks[index].isCompleted = !tasks[index].isCompleted;
-    tasks.refresh();
+  Future<void> toggleTaskCompletion(int index) async {
+    try {
+      // Récupérer la tâche sélectionnée
+      final task = tasks[index];
+      task.isCompleted = !task.isCompleted;
+      // Appeler l'API pour mettre à jour le statut d'achèvement
+      final updatedTaskJson = await _apiProvider.toggleTaskCompletion(index);
+      // Trouver l'index de la tâche mise à jour
+      final taskIndex = tasks.indexWhere((u) => u.id == task.id);
+      if (taskIndex != -1 && updatedTaskJson != null) {
+        // Mettre à jour la tâche dans la liste locale
+        tasks[taskIndex] = Task.fromJson(updatedTaskJson);
+        tasks.refresh(); // Rafraîchir la liste observable
+      }
+    } catch (e) {
+      // Gérer les erreurs
+      Get.snackbar(
+        "Erreur",
+        "Impossible de mettre à jour la tâche: $e",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
+
+  // Basculer l'état d'achèvement
 
   // Valider les champs de texte
   bool _validateFields(BuildContext context) {
@@ -55,7 +93,7 @@ class TodoController extends GetxController {
       return false;
     }
     if (taskDescriptionController.text.trim().isEmpty) {
-      _showError(context, "Veuillez sélectionner une description.");
+      _showError(context, "Veuillez entrer une description.");
       return false;
     }
     if (taskDateController.text.trim().isEmpty) {
@@ -79,8 +117,7 @@ class TodoController extends GetxController {
       snackPosition: SnackPosition.BOTTOM,
     );
   }
-
-  // Ouvrir le modal d'ajout ou d'édition
+   // Ouvrir le modal d'ajout ou d'édition
   void openTaskModal(BuildContext context, {bool isEdit = false, int? index}) {
     if (isEdit && index != null) {
       final task = tasks[index];
@@ -98,8 +135,7 @@ class TodoController extends GetxController {
     _showTaskBottomSheet(context, isEdit: isEdit, index: index);
   }
 
-  // Afficher le BottomSheet
-  void _showTaskBottomSheet(BuildContext context,
+void _showTaskBottomSheet(BuildContext context,
       {required bool isEdit, int? index}) {
     showModalBottomSheet(
       context: context,
@@ -133,8 +169,8 @@ class TodoController extends GetxController {
               ),
               Text(
                 isEdit ? "Modifier la tâche" : "Ajouter une tâche",
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               _buildTextField(
@@ -198,13 +234,13 @@ class TodoController extends GetxController {
                   ElevatedButton(
                     onPressed: () {
                       if (isEdit && index != null) {
-                        editTask(context, index);
+                        //updatedTask(context, index);
                       } else {
-                        addTask(context);
+                       //addTask(context);
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
+                      backgroundColor: Colors.blueAccent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -224,7 +260,6 @@ class TodoController extends GetxController {
     );
   }
 
-  // Widget pour un champ de texte
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,

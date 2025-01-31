@@ -9,26 +9,26 @@ class HomeView extends StatelessWidget {
     // Liste des détails pour chaque carte
     final List<Map<String, dynamic>> cardDetails = [
       {
-        'title': 'CRUD APP',
+        'title': 'K-AGENTS',
         'color': Colors.blueAccent,
         'icon': Icons.app_registration,
         'route': '/crud', // Route pour CRUD APP
       },
       {
-        'title': 'TODO APP',
-        'color': Colors.greenAccent,
+        'title': 'TODO-LIST',
+        'color': Colors.red,
         'icon': Icons.check_circle_outline,
         'route': '/todo', // Route pour TODO APP
       },
       {
-        'title': 'PAY APP',
-        'color': Colors.orangeAccent,
+        'title': 'E-PAY',
+        'color': Colors.green,
         'icon': Icons.payment,
         'route': '/payapp', // Route pour PAY APP
       },
       {
-        'title': 'CREDIT APP',
-        'color': Colors.purpleAccent,
+        'title': 'E-CREDIT',
+        'color': Colors.orange,
         'icon': Icons.credit_card,
         'route': '/creditapp', // Route pour CREDIT APP
       },
@@ -36,7 +36,7 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MULTI APPS"),
+        title: const Text("Z-gest",style:TextStyle(fontWeight:FontWeight.bold)),
       ),
       backgroundColor: Colors.white,
       body: Padding(

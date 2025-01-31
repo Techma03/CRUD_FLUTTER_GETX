@@ -41,8 +41,8 @@ class CrudController extends GetxController {
     final index = user.indexWhere((u) => u.id == id);
     if (index != -1) {
       user[index] = User.fromJson(updatedUser!);
-    }
-    fetchUser();
+    }     
+     fetchUser();
   }
 
   void deleteUser(int id) async {
