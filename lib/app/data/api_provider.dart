@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiProvider {
-  final String baseUrl = "http://192.168.177.4/techapp";
+  final String baseUrl = "http://192.168.71.4/techapp";
   Future<List<dynamic>> getAgent() async {
     final response = await http.get(Uri.parse("$baseUrl/agents/data.php"));
     if (response.statusCode == 200) {
@@ -141,7 +141,7 @@ class ApiProvider {
         'Content-Type': 'application/json'
       }, // Indique que les données sont en JSON
       body: jsonEncode({
-        'titre': title,
+        'title': title,
         'description': description,
         'date': date,
         'time': time

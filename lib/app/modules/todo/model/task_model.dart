@@ -22,8 +22,8 @@ class Task {
       "id": id,
       "title": title,
       "description": description,
-      "date": date,
-      "time": time,
+      "created_date": date,
+      "created_time": time,
       "is_completed": isCompleted ? 1 : 0,
     };
   }
@@ -31,11 +31,11 @@ class Task {
   // Créer une tâche à partir d'un JSON
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      date: json['date'],
-      time: json['time'],
+      id: json['id'] ?? 0,
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      date: json['created_date'] ?? '',
+      time: json['created_time'] ?? '',
       isCompleted: json['is_completed'] == 1,
     );
   }
